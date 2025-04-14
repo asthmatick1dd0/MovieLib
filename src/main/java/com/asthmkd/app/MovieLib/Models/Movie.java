@@ -29,7 +29,8 @@ public class Movie {
     @Column
     private StatusEnum status;
 
-
+    @Min(1)
+    @Max(10)
     @Column
     private int userRating;
 
