@@ -2,6 +2,7 @@ package com.asthmkd.app.MovieLib.Controller;
 
 import com.asthmkd.app.MovieLib.Models.Movie;
 import com.asthmkd.app.MovieLib.Service.MovieService;
+import com.asthmkd.app.MovieLib.Service.OMDbService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +10,11 @@ import java.util.List;
 @RestController
 public class MovieAPIController {
     private final MovieService movieService;
+    private final OMDbService omdbService;
 
-    public MovieAPIController(MovieService movieService) {
+    public MovieAPIController(MovieService movieService, OMDbService omdbService) {
         this.movieService = movieService;
+        this.omdbService = omdbService;
     }
     @GetMapping(value = "/")
     public String getPage() {
@@ -29,9 +32,11 @@ public class MovieAPIController {
     }
 
     @PostMapping(value = "/save")
-    public String addMovie(@RequestBody Movie movie) {
-        movieService.addMovie(movie);
-        return "saved";
+    public Movie fetchAndSaveMovie(@RequestBody Movie movie_) {
+        Movie movie = omdbService.fetchMovieDetails(movie_.getTitle());
+        movie.setUserRating(movie_.getUserRating());
+        movie.setStatus(movie_.getStatus());
+        return movieService.addMovie(movie);
     }
 
     @PutMapping(value = "/update/{id}")

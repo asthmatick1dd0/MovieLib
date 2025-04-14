@@ -1,6 +1,8 @@
 package com.asthmkd.app.MovieLib.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -16,7 +18,7 @@ public class Movie {
     private String title;
 
     @Column
-    private String movieDate;
+    private Integer releaseDate;
 
     @Column
     private LocalDate watchedDate;
@@ -26,6 +28,10 @@ public class Movie {
 
     @Column
     private StatusEnum status;
+
+
+    @Column
+    private int userRating;
 
     public Long getId() {
         return id;
@@ -43,6 +49,14 @@ public class Movie {
         this.title = title;
     }
 
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
+    }
+
     public String getGenre() {
         return genre;
     }
@@ -51,12 +65,12 @@ public class Movie {
         this.genre = genre;
     }
 
-    public String getMovieDate(){
-        return movieDate;
+    public Integer getReleaseDate(){
+        return releaseDate;
     }
 
-    public void setMovieDate(String movieDate) {
-        this.movieDate = movieDate;
+    public void setReleaseDate(Integer releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public LocalDate getWatchedDate(){

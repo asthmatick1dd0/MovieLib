@@ -42,10 +42,8 @@ public class MovieService {
 
     public Movie updateMovie(@PathVariable long id, @RequestBody Movie movie) {
         Movie updateMovie = movieRepository.findById(id).get();
-        updateMovie.setTitle(movie.getTitle());
-        updateMovie.setGenre(movie.getGenre());
-        updateMovie.setMovieDate(movie.getMovieDate());
         updateMovie.setStatus(movie.getStatus());
+        updateMovie.setUserRating(movie.getUserRating());
         if (movie.getStatus() == StatusEnum.WATCHED) {
             updateMovie.setWatchedDate(LocalDate.now());
         }
